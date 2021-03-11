@@ -1,0 +1,15 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    overflow: hidden;
+    min-height: 90vh;
+    padding-bottom: 10vh;
+}
+
+.main-content {
+    margin-top: 10vh;
+}
