@@ -1,8 +1,8 @@
 import { LOGIN_SUCCESS, LOGOUT_SUCCESS, REGISTER_SUCCESS } from '../actions/types'
 
 const initialState = {
-    loggedIn: null,
-    user: {}
+    loggedIn: true,
+    user: {name: 'John Doe'}
 }
 
 export default (state = initialState, action) => {

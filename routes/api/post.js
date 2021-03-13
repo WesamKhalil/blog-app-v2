@@ -6,7 +6,7 @@ router.get("/all", getPosts)
 
 router.get("/single/:id", getSinglePost)
 
-router.post("/newpost",  createPost)
+router.post("/add",  createPost)
 
 router.put("/edit/:id", editPost)
 
