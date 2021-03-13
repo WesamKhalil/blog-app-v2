@@ -23,4 +23,16 @@ userSchema.pre('save', async function(next) {
     next()
 })
 
+userSchema.statics.verify = async function(email, password) {
+    const user = this.findOne({email})
+    
+    if(!user) throw new Error("Wrong email.")
+
+    const correctPassword = await bcrypt.compare(password, user.password)
+
+    if(!correctPassword) throw new Error("Wrong email or password.")
+
+    return user
+}
+
 module.exports = mongoose.model('user', userSchema)

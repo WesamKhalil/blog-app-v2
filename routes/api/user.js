@@ -1,8 +1,9 @@
-const express = require('express')
+const express = require("express")
 const router = express.Router()
+const { loginUser, registerUser } = require("../../controllers/userApiController")
 
-router.get('/', (req, res) => {
-    res.send('user api working')
-})
+router.post("/login", loginUser)
+
+router.post("/register", registerUser)
 
 module.exports = router
