@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { fetchPosts, deletePost } from '../actions/postActions'
+import { EditDele } from './EditDele'
 import PropTypes from 'prop-types'
 import './styles/Posts.css'
 
@@ -27,7 +28,7 @@ export class Posts extends Component {
                         <p>Written by: {author}</p>
                         <h4>{description}</h4>
                         <p><Link to={"/view/" + _id}>Read more</Link></p>
-                        <button onClick={() => this.props.deletePost(_id)}>Delete</button>
+                        <EditDele id={_id} deletePost={() => this.props.deletePost(_id)} />
                     </div>
                 ))}
             </div>

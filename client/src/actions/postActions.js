@@ -1,4 +1,4 @@
-import { FETCH_POSTS, NEW_POST, FETCH_POST, DELETE_POST } from './types'
+import { FETCH_POSTS, NEW_POST, FETCH_POST, DELETE_POST, EDIT_POST } from './types'
 import axios from 'axios'
 
 export const fetchPosts = () => async (dispatch) => {
@@ -11,7 +11,6 @@ export const fetchPosts = () => async (dispatch) => {
 
 export const fetchPost = id => async (dispatch) => {
     const post = (await axios.get('/api/post/single/' + id)).data
-    console.log(post)
     dispatch({
         type: FETCH_POST,
         payload: post
@@ -32,5 +31,13 @@ export const deletePost = id => async (dispatch, getState) => {
     dispatch({
         type: DELETE_POST,
         payload: items
+    })
+}
+
+export const editPost = (entries, id) => async (dispatch) => {
+    const post = await (axios.put('/api/post/edit/' + id, entries))
+    dispatch({
+        type: EDIT_POST,
+        payload: post.data
     })
 }

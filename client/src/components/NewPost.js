@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { addPost } from '../actions/postActions'
+import { addPost, fetchPost, editPost } from '../actions/postActions'
 import PropTypes from 'prop-types'
 import './styles/NewPost.css'
 
@@ -8,7 +8,13 @@ export class NewPost extends Component {
 
     static propTypes = {
         loggedIn: PropTypes.bool,
-        id: PropTypes.string
+        id: PropTypes.string,
+        addPost: PropTypes.func,
+        fetchPost: PropTypes.func
+    }
+
+    componentDidMount() {
+        this.props.fetchPost(this.props.match.params.id)
     }
 
     handleSubmit = async (e) => {
@@ -19,11 +25,13 @@ export class NewPost extends Component {
         const description = e.target.description.value
         const content = e.target.content.value
 
-        console.log(author, title, description, content)
-
         const entries = { author, title, description, content }
 
-        await this.props.addPost(entries)
+        if(this.props.match.params.id) {
+            await this.props.editPost(entries, this.props.match.params.id)
+        } else {
+            await this.props.addPost(entries)
+        }
 
         this.props.history.push('/view/' + this.props.id)
     }
@@ -39,9 +47,9 @@ export class NewPost extends Component {
             <div className="post-form">
                 <h1 className="form-title">Create a new post.</h1>
                 <form onSubmit={this.handleSubmit}>
-                    <input type="text" name="title" placeholder="Title" autoComplete="off" />
-                    <input type="text" name="description" placeholder="Description" autoComplete="off" />
-                    <textarea type="text" name="content" placeholder="Content"></textarea>
+                    <input type="text" name="title" defaultValue={this.props.post.title} placeholder="Title" autoComplete="off" />
+                    <input type="text" name="description" defaultValue={this.props.post.description} placeholder="Description" autoComplete="off" />
+                    <textarea type="text" name="content" defaultValue={this.props.post.content} placeholder="Content"></textarea>
                     <button>Submit</button>
                 </form>
             </div>
@@ -52,7 +60,8 @@ export class NewPost extends Component {
 const mapStateToProps = state => ({
     loggedIn: state.auth.loggedIn,
     name: state.auth.user.name,
-    id: state.posts.item._id
+    id: state.posts.item._id,
+    post: state.posts.item
 })
 
-export default connect(mapStateToProps, { addPost })(NewPost)
+export default connect(mapStateToProps, { addPost, fetchPost, editPost })(NewPost)

@@ -32,7 +32,7 @@ const editPost = async (req, res) => {
     try {
         const post = await Post.findByIdAndUpdate(req.params.id, req.body, { runValidators: true })
         if(post === null) throw new Error("Post doesn't exist.")
-        res.sendStatus(200)
+        res.json(post)
     } catch(error) {
         res.sendStatus(400)
     }

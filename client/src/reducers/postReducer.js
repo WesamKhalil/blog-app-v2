@@ -1,4 +1,4 @@
-import { FETCH_POSTS, NEW_POST, FETCH_POST, DELETE_POST } from '../actions/types'
+import { FETCH_POSTS, NEW_POST, FETCH_POST, DELETE_POST, EDIT_POST } from '../actions/types'
 
 const initialState = {
     items: [],
@@ -13,8 +13,9 @@ export default (state = initialState, action) => {
                 ...state,
                 items: action.payload
             }
-        case NEW_POST:
         case FETCH_POST:
+        case NEW_POST:
+        case EDIT_POST:
             return {
                 ...state,
                 item: action.payload
