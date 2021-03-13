@@ -1,21 +1,22 @@
-import { FETCH_POSTS, NEW_POST, FETCH_POST } from '../actions/types'
+import { LOGIN_SUCCESS, LOGOUT_SUCCESS, REGISTER_SUCCESS } from '../actions/types'
 
 const initialState = {
-    items: [],
-    item: {}
+    loggedIn: null,
+    user: {}
 }
 
 export default (state = initialState, action) => {
     switch(action.type) {
-        case FETCH_POSTS:
+        case LOGIN_SUCCESS:
             return {
                 ...state,
-                items: action.payload
+                loggedIn: true
             }
-        case FETCH_POST:
+        case LOGOUT_SUCCESS:
             return {
                 ...state,
-                item: action.payload
+                loggedIn: null,
+                user: null
             }
         default:
             return state

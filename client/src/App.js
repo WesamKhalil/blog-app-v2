@@ -3,9 +3,10 @@ import { Provider } from 'react-redux'
 import store from './store.js'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import NavBar from './components/NavBar'
-import Login from './components/Login'
+import Auth from './components/Auth'
 import Posts from './components/Posts'
-import Form from './components/Form'
+import NewPost from './components/NewPost'
+import ViewPost from './components/ViewPost'
 import './App.css'
 
 export class App extends Component {
@@ -13,13 +14,14 @@ export class App extends Component {
         return (
             <Provider store={store}>
                 <Router>
-                    <div className="container">
+                    <div className="app-container">
                         <NavBar />
                         <div className="main-content">
                             <Route exact path="/" component={Posts} />
-                            <Route path="/create" component={Form} />
-                            <Route path="/edit/:id" component={Form} />
-                            <Route path="/login" component={Login} />
+                            <Route path="/new" component={NewPost} />
+                            <Route path="/edit/:id" component={NewPost} />
+                            <Route path="/auth/:type" component={Auth} />
+                            <Route path="/view/:id" component={ViewPost} />
                         </div>
                     </div>
                 </Router>

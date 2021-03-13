@@ -1,10 +1,10 @@
 const express = require("express")
 const router = express.Router()
-const { getPosts, getSinglePost, createPost, editPost, deletePost } = require("../../controllers/blogApiController")
+const { getPosts, getSinglePost, createPost, editPost, deletePost } = require("../../controllers/postApiController")
 
 router.get("/all", getPosts)
 
-router.get("/single", getSinglePost)
+router.get("/single/:id", getSinglePost)
 
 router.post("/newpost",  createPost)
 

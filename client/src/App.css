@@ -4,12 +4,9 @@
     box-sizing: border-box;
 }
 
-.container {
+.app-container {
     overflow: hidden;
-    min-height: 90vh;
-    padding-bottom: 10vh;
-}
-
-.main-content {
+    min-height: 95vh;
     margin-top: 10vh;
+    background-color: #EAEAEA;
 }

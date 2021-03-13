@@ -1,2 +1,6 @@
 export const FETCH_POSTS = 'FETCH_POSTS'
-export const NEW_POST = 'NEW_POST'
+export const NEW_POSTS = 'NEW_POSTS'
+export const FETCH_POST = 'FETCH_POST'
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
+export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS'
+export const REGISTER_SUCCESS = 'REGISTER_SUCCESS'

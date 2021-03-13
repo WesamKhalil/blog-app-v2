@@ -5,6 +5,8 @@ nav {
     padding: 0 1.8rem;
     background-color: blue;
     position: fixed;
+    top: 0;
+    left: 0;
     color: #fff;
     display: flex;
     justify-content: flex-end;
@@ -115,10 +117,11 @@ nav {
     right: 0%;
   }
 
-  @media (min-width: 650px) {
+  @media (min-width: 750px) {
     /* Nav */
     nav {
       justify-content: center;
+      padding: 0;
     }
 
     .checkbox, .burger {
@@ -126,11 +129,10 @@ nav {
     }
 
     .menu {
-      width: 60%;
+      width: 100%;
       height: 10vh;
       right: 0;
       padding: 0;
-      margin-right: 1.2rem;
       flex-direction: row;
       position: relative;
     }
@@ -139,6 +141,6 @@ nav {
   @media (min-width: 930px) {
     /* Nav */
     .menu {
-      width: 40%;
+      width: 80%;
     }
   }

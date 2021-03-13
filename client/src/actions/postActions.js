@@ -1,18 +1,19 @@
-import { FETCH_POSTS, NEW_POST } from './types'
+import { FETCH_POSTS, NEW_POST, FETCH_POST } from './types'
+import axios from 'axios'
 
-export const fetchPosts = () => dispatch => {
-    //asynchronous function here
+export const fetchPosts = () => async (dispatch) => {
+    const posts = (await axios.get('/api/post/all')).data.posts
     dispatch({
         type: FETCH_POSTS,
-        payload: ["Hello world!"]
+        payload: posts
     })
 }
 
-// export function fetchPosts() {
-//     return function(dispatch) {
-//         dispatch({
-//             type: FETCH_POSTS,
-//             payload: ["Hello world!"]
-//         })
-//     }
-// }
+export const fetchPost = id => async (dispatch) => {
+    const post = (await axios.get('/api/post/single/' + id)).data
+    console.log(post)
+    dispatch({
+        type: FETCH_POST,
+        payload: post
+    })
+}
