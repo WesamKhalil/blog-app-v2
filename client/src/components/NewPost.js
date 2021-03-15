@@ -24,7 +24,7 @@ export class NewPost extends Component {
 
     async componentDidMount() {
         await this.props.fetchPost(this.props.match.params.id)
-
+        console.log('component', this.props.item)
         const { title, description, content } = this.props.item
 
         if(this.props.match.params.id) this.setState({title, description, content})
@@ -33,7 +33,6 @@ export class NewPost extends Component {
     handleSubmit = async (e) => {
         e.preventDefault()
 
-        console.log(e.target.title.value)
         const author = this.props.user.name
         const email = this.props.user.email
         const title = e.target.title.value
@@ -48,7 +47,12 @@ export class NewPost extends Component {
             await this.props.addPost(entries)
         }
 
-        this.props.history.push('/view/' + this.props.match.params.id)
+        if(this.props.match.path === '/edit/:id' || this.props.match.path === '/new') {
+            const state = { ...this.props.item, author, email, title, description, content }
+            this.props.history.push({ pathname: '/view/' + this.props.match.params.id, state })
+        } else {
+            this.props.history.push('/view/' + this.props.match.params.id)
+        }
     }
 
     render() {

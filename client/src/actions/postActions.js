@@ -36,7 +36,9 @@ export const deletePost = id => async (dispatch, getState) => {
 }
 
 export const editPost = (entries, id) => async (dispatch) => {
-    const post = await (axios.put('/api/post/edit/' + id, entries, tokenConfig())).data
+    console.log('edit action', entries, id)
+    const post =  (await axios.put('/api/post/edit/' + id, entries, tokenConfig())).data
+    console.log('action', post)
     dispatch({
         type: EDIT_POST,
         payload: post

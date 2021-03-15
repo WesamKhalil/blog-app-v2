@@ -16,6 +16,7 @@ export default (state = initialState, action) => {
         case FETCH_POST:
         case NEW_POST:
         case EDIT_POST:
+            console.log('reducer', action.payload)
             return {
                 ...state,
                 item: action.payload

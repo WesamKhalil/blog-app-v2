@@ -30,6 +30,7 @@ export class ViewPost extends Component {
     }
 
     async componentDidMount() {
+        if(this.props.location.state) return this.setState(this.props.location.state)
         await this.props.fetchPost(this.props.match.params.id)
         this.setState(this.props.post)
     }
