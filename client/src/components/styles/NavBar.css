@@ -9,9 +9,19 @@ nav {
     left: 0;
     color: #fff;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
     z-index: 3;
+  }
+
+  .menu-name {
+    display: none;
+    font-size: 1.2rem;
+
+  }
+
+  .nav-name {
+    font-size: 1.2rem;
   }
 
   .filler {
@@ -44,16 +54,31 @@ nav {
     align-items: center;
     transition: right 0.4s ease;
   }
+
+  .menu-button-left {
+    height: 66%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+
+  .menu-button-right {
+    height: 33%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
   
   .nav-btn {
     color: #fff;
     background-color: #4e4eff;
     border-radius: 2px;
     border: 1px solid #fff;
-    padding: 6px 12px;
+    padding: 6px 0px;
     display: inline-block;
     text-align: center;
-    width: 150px;
+    width: 120px;
+    font-size: 1.2rem;
   }
 
   .nav-btn:hover {
@@ -124,6 +149,33 @@ nav {
       padding: 0;
     }
 
+    .nav-name {
+      display: none;
+    }
+
+    .menu-button-left {
+      height: 100%;
+      width: 50%;
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: space-around;
+      align-items: center;
+    }
+  
+    .menu-button-right {
+      height: 100%;
+      width: 50%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
+    }
+    
+
+    .menu-name {
+      display: block;
+    }
+
     .checkbox, .burger {
       display: none;
     }
@@ -139,8 +191,13 @@ nav {
   }
 
   @media (min-width: 930px) {
-    /* Nav */
-    .menu {
-      width: 80%;
+    .menu-button-left {
+      height: 100%;
+      width: 30%;
+    }
+  
+    .menu-button-right {
+      height: 100%;
+      width: 40%;
     }
   }

@@ -16,7 +16,7 @@ export class NavBar extends Component {
         if(this.props.loggedIn) {
             return (
                 <React.Fragment>
-                    <h1>Welcome, {this.props.user.name}</h1>
+                    <h1 className="menu-name">Welcome, {this.props.user.name}</h1>
                     <h1><a onClick={() => this.props.logout()}className="nav-btn">Logout</a></h1>
                 </React.Fragment>
             )
@@ -33,6 +33,7 @@ export class NavBar extends Component {
     render() {
         return (
             <nav>
+                { this.props.loggedIn ? <h1 className="nav-name">Welcome, {this.props.user.name}</h1> : null }
                 <input type="checkbox" className="toggler" />
                 <div className="burger">
                     <div className="first-bar"></div>
@@ -40,9 +41,13 @@ export class NavBar extends Component {
                     <div className="third-bar"></div>
                 </div>
                 <div className="menu">
-                    <h1><Link to="/" className="nav-btn">Posts</Link></h1>
-                    <h1><Link to="/new" className="nav-btn">Create Post</Link></h1>
-                    { this.authButtons() }
+                    <div className="menu-button-left">
+                        <h1><Link to="/new" className="nav-btn">Create Post</Link></h1>
+                        <h1><Link to="/" className="nav-btn">Posts</Link></h1>
+                    </div>
+                    <div className="menu-button-right">
+                        { this.authButtons() }
+                    </div>
                 </div>
             </nav>
         )

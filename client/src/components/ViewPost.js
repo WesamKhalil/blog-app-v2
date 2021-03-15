@@ -32,12 +32,13 @@ export class ViewPost extends Component {
             <div className="view-post">
                 <h1 className="viewpost-title">{title}</h1>
                 <p>Author: {author}</p>
-                <p>Last updated at: {updatedAt}</p>
-                <p>Created at: {createdAt}</p>
+                <p>Last updated at: {updatedAt?.slice(0, 10)}</p>
+                <p>Created at: {createdAt?.slice(0, 10)}</p>
                 <h3>Description: {description}</h3>
                 <p>{content}</p>
-                { email === this.props.user?.email ? <EditDele id={_id} deletePost={() => this.props.deletePost(_id)} /> : null }
-
+                <div className="view-post-buttons">
+                    { email === this.props.user?.email ? <EditDele id={_id} deletePost={() => this.props.deletePost(_id)} /> : null }
+                </div>
             </div>
         )
     }

@@ -1,0 +1,20 @@
+.edit {
+    background-color: green;
+}
+
+.delete {
+    background-color: red;
+}
+
+.delete, .edit {
+    height: auto;
+    width: 80px;
+    padding: 10px 20px;
+    color: #fff;
+    border-radius: 5px;;
+}
+
+.edit a, .edit a:visited {
+    text-decoration: none;
+    color: #fff;
+}

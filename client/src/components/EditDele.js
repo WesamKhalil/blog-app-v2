@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import './styles/EditDele.css'
 
 export class EditDele extends Component {
     constructor(props) { super(props) }
@@ -10,8 +11,8 @@ export class EditDele extends Component {
 
         return (
             <React.Fragment>
-                <button><Link to={'/edit/'+ id}>Edit</Link></button>
-                <button onClick={() => deletePost()}>Delete</button>
+                <Link to={'/edit/'+ id}><button className="edit">Edit</button></Link>
+                <button onClick={() => deletePost()} className="delete">Delete</button>
             </React.Fragment>
         )
     }

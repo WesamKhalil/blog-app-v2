@@ -20,15 +20,19 @@ export class Posts extends Component {
 
     render() {
         return (
-            <div className="form-container">
+            <div className="posts-container">
                 <h1 className="page-title">Posts</h1>
                 {this.props.posts.map(({ author, email, title, description, _id }, ind) => (
                     <div key={"posts" + ind} className="post">
-                        <h3 className="post-title">{title}</h3>
-                        <p>Written by: {author}</p>
-                        <h4>{description}</h4>
-                        <p><Link to={"/view/" + _id}>Read more</Link></p>
-                        { email === this.props.user.email ? <EditDele id={_id} deletePost={() => this.props.deletePost(_id)} /> : null }
+                        <div className="post-inner-box">
+                            <h2 className="post-title">Title: {title}</h2>
+                            <h3>Description: {description}</h3>
+                            <p>Written by: {author}</p>
+                            <p><Link to={"/view/" + _id}>Read more</Link></p>
+                        </div>
+                        <div className="post-buttons">
+                            { email === this.props.user.email ? <EditDele id={_id} deletePost={() => this.props.deletePost(_id)} /> : null }
+                        </div>
                     </div>
                 ))}
             </div>

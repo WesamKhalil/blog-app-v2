@@ -8,6 +8,7 @@ I'm using Json Web Tokens for authorisation and Bcrypt to encrypt user passwords
 
 To get the app working do the following.  
 
+Make sure you have Node JS installed, I'm using node version 15.5.0.
 Go into a terminal and CD into this folder.  
 Type into the terminal "npm install" to install all the front end packages.  
 Create a ".env" file in the root folder, here you will provide all the environment variables.  
