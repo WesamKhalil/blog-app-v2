@@ -1,11 +1,20 @@
 import { FETCH_POSTS, NEW_POST, FETCH_POST, DELETE_POST, EDIT_POST } from './types'
 import axios from 'axios'
 
-export const fetchPosts = () => async (dispatch) => {
-    const posts = (await axios.get('/api/post/all')).data.posts
+export const fetchPosts = (page, limit) => async (dispatch) => {
+    const posts = (await axios.get(`/api/post/?page=${page}&limit=${limit}`)).data.posts
     dispatch({
         type: FETCH_POSTS,
         payload: posts
+    })
+}
+
+export const fetchMorePosts = (page, limit) => async (dispatch, getstate) => {
+    const newPosts = (await axios.get(`/api/post/?page=${page}&limit=${limit}`)).data.posts
+    const oldPosts = getstate().posts.items
+    dispatch({
+        type: FETCH_POSTS,
+        payload: oldPosts.concat(newPosts)
     })
 }
 
@@ -18,7 +27,6 @@ export const fetchPost = id => async (dispatch) => {
 }
 
 export const addPost = entries => async (dispatch) => {
-    console.log(tokenConfig())
     const post = (await axios.post('/api/post/add', entries, tokenConfig())).data
     dispatch({
         type: NEW_POST,
@@ -36,9 +44,7 @@ export const deletePost = id => async (dispatch, getState) => {
 }
 
 export const editPost = (entries, id) => async (dispatch) => {
-    console.log('edit action', entries, id)
     const post =  (await axios.put('/api/post/edit/' + id, entries, tokenConfig())).data
-    console.log('action', post)
     dispatch({
         type: EDIT_POST,
         payload: post

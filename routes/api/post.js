@@ -3,7 +3,7 @@ const router = express.Router()
 const { getPosts, getSinglePost, createPost, editPost, deletePost } = require("../../controllers/postApiController")
 const { authPost, authPostMutate } = require('../../middleware/authMiddleware')
 
-router.get("/all", getPosts)
+router.get("/", getPosts)
 
 router.get("/single/:id", getSinglePost)
 

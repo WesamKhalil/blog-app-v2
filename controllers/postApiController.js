@@ -1,11 +1,14 @@
 const Post = require('../models/Post')
 
 const getPosts = async (req, res) => {
+    const page = parseInt(req.query.page) || 1
+    const limit = parseInt(req.query.limit) || 5
+    const startIndex = (page - 1) * limit
     try {
-        const posts = await Post.find().sort({createdAt: "desc"})
-        res.json({posts})
+        const posts = await Post.find().sort({ createdAt: 'desc'}).skip(startIndex).limit(limit).exec()
+        res.json({ posts })
     } catch(error) {
-        res.sendStatus(400)
+        res.status(400).json({ message: error.message })
     }
 }
 

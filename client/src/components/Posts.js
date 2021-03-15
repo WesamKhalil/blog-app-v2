@@ -1,21 +1,37 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { fetchPosts, deletePost } from '../actions/postActions'
+import { fetchPosts, fetchMorePosts, deletePost } from '../actions/postActions'
 import { EditDele } from './EditDele'
 import PropTypes from 'prop-types'
 import './styles/Posts.css'
 
 export class Posts extends Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            page: 1,
+            limit: 5
+        }
+    }
 
     static propTypes = {
         fetchPosts: PropTypes.func.isRequired,
+        fetchMorePosts: PropTypes.func.isRequired,
         deletePost: PropTypes.func.isRequired,
         posts: PropTypes.array.isRequired
     }
 
     componentDidMount() {
-        this.props.fetchPosts()
+        const { page, limit } = this.state
+        this.props.fetchPosts(page, limit)
+    }
+
+    loadMorePosts = () => {
+        this.setState(prevstate => ({ page: prevstate.page + 1 }))
+        const { page, limit } = this.state
+        this.props.fetchMorePosts(page + 1, limit)
     }
 
     render() {
@@ -35,6 +51,9 @@ export class Posts extends Component {
                         </div>
                     </div>
                 ))}
+                <div className="load-more">
+                    <button onClick={this.loadMorePosts}>Load more posts</button>
+                </div>
             </div>
         )
     }
@@ -45,4 +64,4 @@ const mapStateToProps = state => ({
     user: state.auth.user
 })
 
-export default connect(mapStateToProps, { fetchPosts, deletePost })(Posts)
+export default connect(mapStateToProps, { fetchPosts, fetchMorePosts, deletePost })(Posts)

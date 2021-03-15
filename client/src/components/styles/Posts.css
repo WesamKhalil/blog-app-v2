@@ -43,6 +43,17 @@
     margin-bottom: 15px;
 }
 
+.load-more {
+    margin: 50px auto;
+    width: 100%;
+    text-align: center;
+}
+
+.load-more button {
+    padding: 10px 20px;
+    font-size: 1.2rem;
+}
+
 @media (min-width: 750px) {
     .post {
         width: 550px;
