@@ -36,10 +36,10 @@ export const deletePost = id => async (dispatch, getState) => {
 }
 
 export const editPost = (entries, id) => async (dispatch) => {
-    const post = await (axios.put('/api/post/edit/' + id, entries, tokenConfig()))
+    const post = await (axios.put('/api/post/edit/' + id, entries, tokenConfig())).data
     dispatch({
         type: EDIT_POST,
-        payload: post.data
+        payload: post
     })
 }
 

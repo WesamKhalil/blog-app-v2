@@ -27,12 +27,13 @@ export class NewPost extends Component {
 
         const { title, description, content } = this.props.item
 
-        this.setState({title, description, content})
+        if(this.props.match.params.id) this.setState({title, description, content})
     }
 
     handleSubmit = async (e) => {
         e.preventDefault()
 
+        console.log(e.target.title.value)
         const author = this.props.user.name
         const email = this.props.user.email
         const title = e.target.title.value
@@ -46,10 +47,6 @@ export class NewPost extends Component {
         } else {
             await this.props.addPost(entries)
         }
-
-        e.target.title.value = ''
-        e.target.description.value = ''
-        e.target.content.value = ''
 
         this.props.history.push('/view/' + this.props.match.params.id)
     }

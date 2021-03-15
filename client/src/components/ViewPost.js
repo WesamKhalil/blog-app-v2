@@ -6,6 +6,21 @@ import PropTypes from 'prop-types'
 import './styles/ViewPost.css'
 
 export class ViewPost extends Component {
+    constructor(props) {
+        super(props)
+
+        this.state = { 
+            title: '',
+            author: '',
+            email: '',
+            description: '',
+            content: '',
+            createdAt: '',
+            updatedAt: '',
+            _id: 0 
+        }
+    }
+
 
     static propTypes = {
         post: PropTypes.object,
@@ -14,8 +29,9 @@ export class ViewPost extends Component {
 
     }
 
-    componentDidMount() {
-        this.props.fetchPost(this.props.match.params.id)
+    async componentDidMount() {
+        await this.props.fetchPost(this.props.match.params.id)
+        this.setState(this.props.post)
     }
 
     handleDelete = async (id) => {
@@ -26,7 +42,7 @@ export class ViewPost extends Component {
 
     render() {
 
-        const { title, author, email, description, content, createdAt, updatedAt, _id } = this.props.post
+        const { title, author, email, description, content, createdAt, updatedAt, _id } = this.state
 
         return (
             <div className="view-post">
