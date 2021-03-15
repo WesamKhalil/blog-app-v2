@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { logout } from '../actions/authActions'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import './styles/NavBar.css'
@@ -16,7 +17,7 @@ export class NavBar extends Component {
             return (
                 <React.Fragment>
                     <h1>Welcome, {this.props.user.name}</h1>
-                    <h1><a className="nav-btn">Logout</a></h1>
+                    <h1><a onClick={() => this.props.logout()}className="nav-btn">Logout</a></h1>
                 </React.Fragment>
             )
         }
@@ -55,4 +56,4 @@ const mapStateToProps = state => ({
     user: state.auth.user
 })
 
-export default connect(mapStateToProps, {  })(NavBar)
+export default connect(mapStateToProps, { logout })(NavBar)

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Provider } from 'react-redux'
+import { loadUser } from './actions/authActions'
 import store from './store.js'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import NavBar from './components/NavBar'
@@ -10,6 +11,11 @@ import ViewPost from './components/ViewPost'
 import './App.css'
 
 export class App extends Component {
+
+    componentDidMount() {
+        store.dispatch(loadUser())
+    }
+
     render() {
         return (
             <Provider store={store}>

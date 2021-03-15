@@ -1,21 +1,42 @@
 const jwt = require('jsonwebtoken')
+const User = require('../models/User')
+const Post = require('../models/Post')
 require("dotenv").config()
 
-//Middleware for checking if users can create, edit or delete posts
-const authPostActions = async (req, res, next) => {
+//Confirm that the token sent by client belongs to an existing user
+const authPost = async (req, res, next) => {
     const token = req.header("x-auth-token")
 
-    if(!token) res.sendStatus(401)
+    if(!token) return res.sendStatus(401)
 
     try {
-        const name = await jwt.verify(token, process.env.JWT_KEY)
+        const decodedToken = await jwt.verify(token, process.env.JWT_KEY)
 
-        if(name !== req.body.name) throw new Error("You don't have authority on this post.")
+        const user = await User.findById(decodedToken.id).select('email')
+
+        if(user === null) throw new Error("User doesn't exist.")
+
+        req.userEmail = user.email
 
         next()
     } catch(error) {
+        console.log(error)
         res.sendStatus(401)
     }
 }
 
-module.exports = { authPostActions }
+//Middleware for checking if confirmed user can mutate requested document/post
+const authPostMutate = async (req, res, next) => {
+    try {
+        const post = await Post.findById(req.params.id).select('email')
+
+        if(req.userEmail !== post.email) throw new Error("You don't have authority on this post.")
+
+        next()
+    } catch(error) {
+        console.log(error)
+        res.sendStatus(401)
+    }
+}
+
+module.exports = { authPost, authPostMutate }

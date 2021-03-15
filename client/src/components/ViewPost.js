@@ -9,7 +9,9 @@ export class ViewPost extends Component {
 
     static propTypes = {
         post: PropTypes.object,
-        fetchPost: PropTypes.func
+        fetchPost: PropTypes.func,
+        user: PropTypes.object
+
     }
 
     componentDidMount() {
@@ -24,7 +26,7 @@ export class ViewPost extends Component {
 
     render() {
 
-        const { title, author, description, content, createdAt, updatedAt, _id } = this.props.post
+        const { title, author, email, description, content, createdAt, updatedAt, _id } = this.props.post
 
         return (
             <div className="view-post">
@@ -34,7 +36,8 @@ export class ViewPost extends Component {
                 <p>Created at: {createdAt}</p>
                 <h3>Description: {description}</h3>
                 <p>{content}</p>
-                <EditDele id={_id} deletePost={() => this.handleDelete(_id)} />
+                { email === this.props.user?.email ? <EditDele id={_id} deletePost={() => this.props.deletePost(_id)} /> : null }
+
             </div>
         )
     }
@@ -42,7 +45,8 @@ export class ViewPost extends Component {
 
 
 const mapStateToProps = state => ({
-    post: state.posts.item
+    post: state.posts.item,
+    user: state.auth.user
 })
 
 export default connect(mapStateToProps, { fetchPost, deletePost })(ViewPost)

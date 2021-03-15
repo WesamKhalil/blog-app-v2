@@ -18,7 +18,8 @@ export const fetchPost = id => async (dispatch) => {
 }
 
 export const addPost = entries => async (dispatch) => {
-    const post = (await axios.post('/api/post/add', entries)).data
+    console.log(tokenConfig())
+    const post = (await axios.post('/api/post/add', entries, tokenConfig())).data
     dispatch({
         type: NEW_POST,
         payload: post
@@ -26,7 +27,7 @@ export const addPost = entries => async (dispatch) => {
 }
 
 export const deletePost = id => async (dispatch, getState) => {
-    await axios.delete('/api/post/delete/' + id)
+    await axios.delete('/api/post/delete/' + id, tokenConfig())
     const items = getState().posts.items.filter(post => post._id !== id)
     dispatch({
         type: DELETE_POST,
@@ -35,9 +36,19 @@ export const deletePost = id => async (dispatch, getState) => {
 }
 
 export const editPost = (entries, id) => async (dispatch) => {
-    const post = await (axios.put('/api/post/edit/' + id, entries))
+    const post = await (axios.put('/api/post/edit/' + id, entries, tokenConfig()))
     dispatch({
         type: EDIT_POST,
         payload: post.data
     })
+}
+
+const tokenConfig = () => {
+    const token = localStorage.getItem('jwt')
+    if(!token) return {}
+    return {
+        headers: {
+            "x-auth-token": token
+        }
+    }
 }

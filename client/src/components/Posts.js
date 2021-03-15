@@ -22,13 +22,13 @@ export class Posts extends Component {
         return (
             <div className="form-container">
                 <h1 className="page-title">Posts</h1>
-                {this.props.posts.map(({ author, title, description, _id }, ind) => (
+                {this.props.posts.map(({ author, email, title, description, _id }, ind) => (
                     <div key={"posts" + ind} className="post">
                         <h3 className="post-title">{title}</h3>
                         <p>Written by: {author}</p>
                         <h4>{description}</h4>
                         <p><Link to={"/view/" + _id}>Read more</Link></p>
-                        <EditDele id={_id} deletePost={() => this.props.deletePost(_id)} />
+                        { email === this.props.user.email ? <EditDele id={_id} deletePost={() => this.props.deletePost(_id)} /> : null }
                     </div>
                 ))}
             </div>
@@ -37,7 +37,8 @@ export class Posts extends Component {
 }
 
 const mapStateToProps = state => ({
-    posts: state.posts.items
+    posts: state.posts.items,
+    user: state.auth.user
 })
 
 export default connect(mapStateToProps, { fetchPosts, deletePost })(Posts)

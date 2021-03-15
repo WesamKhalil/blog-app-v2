@@ -5,6 +5,15 @@ import PropTypes from 'prop-types'
 import './styles/NewPost.css'
 
 export class NewPost extends Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            title: '',
+            description: '',
+            content: ''
+        }
+    }
 
     static propTypes = {
         loggedIn: PropTypes.bool,
@@ -13,19 +22,24 @@ export class NewPost extends Component {
         fetchPost: PropTypes.func
     }
 
-    componentDidMount() {
-        this.props.fetchPost(this.props.match.params.id)
+    async componentDidMount() {
+        await this.props.fetchPost(this.props.match.params.id)
+
+        const { title, description, content } = this.props.item
+
+        this.setState({title, description, content})
     }
 
     handleSubmit = async (e) => {
         e.preventDefault()
 
-        const author = this.props.name
+        const author = this.props.user.name
+        const email = this.props.user.email
         const title = e.target.title.value
         const description = e.target.description.value
         const content = e.target.content.value
 
-        const entries = { author, title, description, content }
+        const entries = { author, email, title, description, content }
 
         if(this.props.match.params.id) {
             await this.props.editPost(entries, this.props.match.params.id)
@@ -33,10 +47,19 @@ export class NewPost extends Component {
             await this.props.addPost(entries)
         }
 
-        this.props.history.push('/view/' + this.props.id)
+        e.target.title.value = ''
+        e.target.description.value = ''
+        e.target.content.value = ''
+
+        this.props.history.push('/view/' + this.props.match.params.id)
     }
 
     render() {
+
+        let { title, description, content } = this.state
+
+        if(!this.props.match.params.id) title, description, content = null
+
         if(!this.props.loggedIn) return (
             <div className="message-login">
                 <h1>Login to make a post.</h1>
@@ -47,9 +70,9 @@ export class NewPost extends Component {
             <div className="post-form">
                 <h1 className="form-title">Create a new post.</h1>
                 <form onSubmit={this.handleSubmit}>
-                    <input type="text" name="title" defaultValue={this.props.post.title} placeholder="Title" autoComplete="off" />
-                    <input type="text" name="description" defaultValue={this.props.post.description} placeholder="Description" autoComplete="off" />
-                    <textarea type="text" name="content" defaultValue={this.props.post.content} placeholder="Content"></textarea>
+                    <input type="text" name="title" defaultValue={title} placeholder="Title" autoComplete="off" />
+                    <input type="text" name="description" defaultValue={description} placeholder="Description" autoComplete="off" />
+                    <textarea type="text" name="content" defaultValue={content} placeholder="Content"></textarea>
                     <button>Submit</button>
                 </form>
             </div>
@@ -59,9 +82,8 @@ export class NewPost extends Component {
 
 const mapStateToProps = state => ({
     loggedIn: state.auth.loggedIn,
-    name: state.auth.user.name,
-    id: state.posts.item._id,
-    post: state.posts.item
+    user: state.auth.user,
+    item: state.posts.item
 })
 
 export default connect(mapStateToProps, { addPost, fetchPost, editPost })(NewPost)

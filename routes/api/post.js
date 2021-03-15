@@ -1,16 +1,16 @@
 const express = require("express")
 const router = express.Router()
 const { getPosts, getSinglePost, createPost, editPost, deletePost } = require("../../controllers/postApiController")
-const { authPostActions } = require('../../middleware/authMiddleware')
+const { authPost, authPostMutate } = require('../../middleware/authMiddleware')
 
-router.get("/all", authPostActions, getPosts)
+router.get("/all", getPosts)
 
-router.get("/single/:id", authPostActions, getSinglePost)
+router.get("/single/:id", getSinglePost)
 
-router.post("/add", authPostActions,  createPost)
+router.post("/add", authPost,  createPost)
 
-router.put("/edit/:id", authPostActions, editPost)
+router.put("/edit/:id", authPost, authPostMutate, editPost)
 
-router.delete("/delete/:id", authPostActions, deletePost)
+router.delete("/delete/:id", authPost, authPostMutate, deletePost)
 
 module.exports = router

@@ -1,22 +1,25 @@
-import { LOGIN_SUCCESS, LOGOUT_SUCCESS, REGISTER_SUCCESS } from '../actions/types'
+import { LOGIN_SUCCESS, LOGOUT_SUCCESS, REGISTER_SUCCESS, LOAD_USER_SUCCESS } from '../actions/types'
 
 const initialState = {
-    loggedIn: true,
-    user: {name: 'John Doe'}
+    loggedIn: null,
+    user: {}
 }
 
 export default (state = initialState, action) => {
     switch(action.type) {
         case LOGIN_SUCCESS:
+        case REGISTER_SUCCESS:
+        case LOAD_USER_SUCCESS:
             return {
                 ...state,
-                loggedIn: true
+                loggedIn: true,
+                user: { ...(action.payload) }
             }
         case LOGOUT_SUCCESS:
             return {
                 ...state,
                 loggedIn: null,
-                user: null
+                user: {}
             }
         default:
             return state

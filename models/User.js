@@ -4,8 +4,7 @@ const bcrypt = require('bcrypt')
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
     email: {
         type: String,
@@ -24,12 +23,12 @@ userSchema.pre('save', async function(next) {
 })
 
 userSchema.statics.verify = async function(email, password) {
-    const user = this.findOne({email})
+    const user = await this.findOne({ email })
     
     if(!user) throw new Error("Wrong email.")
 
     const correctPassword = await bcrypt.compare(password, user.password)
-
+    
     if(!correctPassword) throw new Error("Wrong email or password.")
 
     return user

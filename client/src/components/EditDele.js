@@ -5,10 +5,13 @@ export class EditDele extends Component {
     constructor(props) { super(props) }
 
     render() {
+
+        const { id, deletePost } = this.props
+
         return (
             <React.Fragment>
-                <button><Link to={'/edit/'+ this.props.id}>Edit</Link></button>
-                <button onClick={() => this.props.deletePost()}>Delete</button>
+                <button><Link to={'/edit/'+ id}>Edit</Link></button>
+                <button onClick={() => deletePost()}>Delete</button>
             </React.Fragment>
         )
     }
