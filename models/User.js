@@ -37,7 +37,7 @@ userSchema.statics.verify = async function(email, password) {
     if(!password) errorList.errors.push({ message: "Please provide a password.", type: "password" })
     if(errorList.errors.length > 0) throw errorList
 
-    const user = await this.findOne({ email }).select('password name').lean()
+    const user = await this.findOne({ email }).select('name password').lean()
     
     if(!user) throw { name: "verify", errors: [{ message: "User with that email doesn't exist.", type: "email" }] }
 
@@ -45,7 +45,7 @@ userSchema.statics.verify = async function(email, password) {
     const correctPassword = await bcrypt.compare(password, user.password)
     if(!correctPassword) throw { name: "verify", errors: [{ message: "Wrong email or password.", type: "general" }] }
 
-    return { name: user.name }
+    return { name: user.name, _id: user._id }
 }
 
 function isValidName(name) {

@@ -33,4 +33,3 @@ Note that to render the edit and delete buttons on the app I'm checking if the u
 todo list:  
 Add markdown functionality.  
 Make id that ties posts to the user who created them that doesn't include their email or user id (we use the id to sign a token).  
-Optimise Mongoose request from the MongoDB database.

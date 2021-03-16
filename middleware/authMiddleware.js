@@ -14,7 +14,7 @@ const authPost = async (req, res, next) => {
 
         const user = await User.findById(decodedToken.id).select('email').lean()
 
-        if(user === null) throw new Error("User doesn't exist.")
+        if(!user) throw new Error("User doesn't exist.")
 
         req.userEmail = user.email
 

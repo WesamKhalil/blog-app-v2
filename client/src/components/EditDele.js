@@ -8,7 +8,7 @@ export class EditDele extends Component {
     render() {
 
         const { id, deletePost } = this.props
-
+        console.log(id)
         return (
             <React.Fragment>
                 <Link to={'/edit/'+ id}><button className="edit">Edit</button></Link>
