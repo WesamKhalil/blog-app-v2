@@ -36,7 +36,7 @@ export class Auth extends Component {
         const password = e.target.password.value
 
         try {
-            if(this.props.match.params.type === 'register') {
+            if(this.props.location.pathname.slice(1) === 'register') {
                 const name = e.target.name.value
                 await this.props.register(name, email, password)
             } else {

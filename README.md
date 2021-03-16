@@ -13,12 +13,14 @@ Go into a terminal and CD into this folder.
 Type into the terminal "npm install" to install all the front end packages.  
 Type in your terminal "npm run client-install" to install all your clients development packages.  
 Create a ".env" file in the root folder, here you will provide all the environment variables.  
-In the ".env" file provide the PORT variable a number to tell the server which port to run on, don't put any spaces.  
-For example "PORT=3000" without the quotes. If your value is a string then wrap the value around single/double quotes.  
-Next provide a string for the MONGOURL variable, you can set up MongoDB and get a url from MongoDB Atlas online.  
-For example "MONGOURL='mongodb+srv://...'" without the double quotes.  
-Then provide a string for JWT_KEY which is the secret word you use to sign your tokens, which you send to the client for authorisation.  
-Then provide a number for CLIENTPORT to tell your client server which port to run on, make sure it's not the same as number as the PORT number.  
+Then provide a number for the PORT value for your servers port, then a anumber for your CLIENTPORT for your front end development servers port.  
+Then provide a string for your MONGOURL that directs to a Mongo database, you can create one and connect to it online with MongoDB Atlas.  
+Finally provide a signing key string to your JWT_KEY which will be used to sign tokens.  
+Don't use any spaces, here is an example.  
+MONGOURL='mongodb+srv://...'  
+PORT=3000  
+CLIENTPORT=8080  
+JWT_KEY='signingkeyexample'  
 
 If you want to transpile the react code into a bundle to update the application that you'll use in production then type in the terminal "npm run client-build".  
  

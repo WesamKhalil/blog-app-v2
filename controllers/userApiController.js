@@ -52,8 +52,8 @@ const loadUser = async (req, res) => {
     const token = req.header("x-auth-token")
     try {
         const decodedToken = await jwt.verify(token, process.env.JWT_KEY)
-        const user = await User.findById(decodedToken.id)
-        res.json({ name: user.name, email: user.email })
+        const { name, email } = await User.findById(decodedToken.id).select('name email').lean()
+        res.json({ name, email })
     } catch(error) {
         res.sendStatus(401)
     }

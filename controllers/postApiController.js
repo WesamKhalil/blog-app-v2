@@ -22,7 +22,7 @@ const getPosts = async (req, res) => {
     const limit = parseInt(req.query.limit) || 5
     const startIndex = (page - 1) * limit
     try {
-        const posts = await Post.find().sort({ createdAt: 'desc'}).skip(startIndex).limit(limit).exec()
+        const posts = await Post.find().sort({ createdAt: 'desc'}).skip(startIndex).limit(limit).select('author email title description').lean()
         res.json({ posts })
     } catch(error) {
         res.sendStatus(400)
@@ -31,11 +31,10 @@ const getPosts = async (req, res) => {
 
 const getSinglePost = async (req, res) => {
     try {
-        const post = await Post.findById(req.params.id)
+        const post = await Post.findById(req.params.id).lean()
         if(post === null) throw new Error("Post doesn't exist.")
         res.json(post)
     } catch(error) {
-        const formattedError = errorHandler(error)
         res.sendStatus(400)
     }
 }
@@ -52,7 +51,7 @@ const createPost = async (req, res) => {
 
 const editPost = async (req, res) => {
     try {
-        const post = await Post.findByIdAndUpdate(req.params.id, req.body, { runValidators: true })
+        const post = await Post.findByIdAndUpdate(req.params.id, req.body, { runValidators: true }).lean()
         if(post === null) throw new Error("Post doesn't exist.")
         res.json(post)
     } catch(error) {

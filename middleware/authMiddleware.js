@@ -12,7 +12,7 @@ const authPost = async (req, res, next) => {
     try {
         const decodedToken = await jwt.verify(token, process.env.JWT_KEY)
 
-        const user = await User.findById(decodedToken.id).select('email')
+        const user = await User.findById(decodedToken.id).select('email').lean()
 
         if(user === null) throw new Error("User doesn't exist.")
 
@@ -20,7 +20,6 @@ const authPost = async (req, res, next) => {
 
         next()
     } catch(error) {
-        console.log(error)
         res.sendStatus(401)
     }
 }
@@ -28,13 +27,12 @@ const authPost = async (req, res, next) => {
 //Middleware for checking if confirmed user can mutate requested document/post
 const authPostMutate = async (req, res, next) => {
     try {
-        const post = await Post.findById(req.params.id).select('email')
+        const post = await Post.findById(req.params.id).select('email').lean()
 
         if(req.userEmail !== post.email) throw new Error("You don't have authority on this post.")
 
         next()
     } catch(error) {
-        console.log(error)
         res.sendStatus(401)
     }
 }
