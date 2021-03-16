@@ -1,6 +1,6 @@
 This is a blog post app where you can see all the posts different people have made.  
 You have the option to register as a user which allows you to create, edit and delete posts.  
-I've implemented a authorisation system with JWT so you can only edit and delete your accounts posts.  
+I've implemented an authorisation system with JWT so you can only edit and delete your accounts posts.  
 This is a SPA made with React, Redux and Redux Thunk for the front end.  
 For the back end I'm using Node and Express to serve files and provide api's for the front end SPA.  
 Posts and user credentials are stored in MongoDB with the Schemas, Models and document manipulation being handled by Mongoose.  
