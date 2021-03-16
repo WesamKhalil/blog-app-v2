@@ -13,7 +13,7 @@ import './App.css'
 export class App extends Component {
 
     componentDidMount() {
-        store.dispatch(loadUser())
+        if(localStorage.getItem('jwt')) store.dispatch(loadUser())
     }
 
     render() {
@@ -26,7 +26,8 @@ export class App extends Component {
                             <Route exact path="/" component={Posts} />
                             <Route path="/new" component={NewPost} />
                             <Route path="/edit/:id" component={NewPost} />
-                            <Route path="/auth/:type" component={Auth} />
+                            <Route path="/login" component={Auth} />
+                            <Route path="/register" component={Auth} />
                             <Route path="/view/:id" component={ViewPost} />
                         </div>
                     </div>

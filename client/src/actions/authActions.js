@@ -1,23 +1,31 @@
-import { LOGIN_SUCCESS, LOGOUT_SUCCESS, REGISTER_SUCCESS, LOAD_USER_SUCCESS } from './types'
+import { LOGIN_SUCCESS, LOGOUT_SUCCESS, REGISTER_SUCCESS, LOAD_USER_SUCCESS, LOGIN_FAILED, REGISTER_FAILED } from './types'
 import axios from 'axios'
 
 export const login = (email, password) => async (dispatch) => {
-    const { name, token } = (await axios.post('/api/user/login', { email, password })).data
-    localStorage.setItem('jwt', token)
-    dispatch({
-        type: LOGIN_SUCCESS,
-        payload: { name, email }
-    })
+    try {
+        const { name, token } = (await axios.post('/api/user/login', { email, password })).data
+        localStorage.setItem('jwt', token)
+        dispatch({
+            type: LOGIN_SUCCESS,
+            payload: { name, email }
+        })
+    } catch(error) {
+        throw error.response.data
+    }
 }
 
 export const register = (name, email, password) => async (dispatch) => {
-    const { token } = (await axios.post('/api/user/register', { name, email, password })).data
-    localStorage.removeItem('jwt')
-    localStorage.setItem('jwt', token)
-    dispatch({
-        type: REGISTER_SUCCESS,
-        payload: { name, email }
-    })
+    try {
+        const { token } = (await axios.post('/api/user/register', { name, email, password })).data
+        localStorage.removeItem('jwt')
+        localStorage.setItem('jwt', token)
+        dispatch({
+            type: REGISTER_SUCCESS,
+            payload: { name, email }
+        })
+    } catch(error) {
+        throw error.response.data
+    }
 }
 
 export const logout = () => dispatch => {

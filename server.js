@@ -23,7 +23,7 @@ app.use("/api/post", apiPostRoutes)
 app.use("/api/user", apiUserRoutes)
 
 //Delivers the SPA
-app.get(["/", "/new", "/edit/:id", "/auth/:type", "/view/:id"], (req, res) => {
+app.get(["/", "/new", "/edit/:id", "/login", "/register", "/view/:id"], (req, res) => {
     res.sendFile(__dirname + "/client/dist/index.html")
 })
 

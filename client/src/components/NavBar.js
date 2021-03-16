@@ -24,8 +24,8 @@ export class NavBar extends Component {
 
         return (
             <React.Fragment>
-                <h1><Link to='/auth/login' className="nav-btn">Login</Link></h1>
-                <h1><Link to='/auth/register' className="nav-btn">Register</Link></h1>
+                <h1><Link to='/login' className="nav-btn">Login</Link></h1>
+                <h1><Link to='/register' className="nav-btn">Register</Link></h1>
             </React.Fragment>
         )
     }

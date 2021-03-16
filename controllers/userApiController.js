@@ -1,6 +1,24 @@
 const User = require('../models/User')
 const jwt = require('jsonwebtoken')
+const e = require('express')
 require("dotenv").config()
+
+const errorHandler = error => {
+    let newError = { name: null, email: null, password: null, general: null }
+
+    if(error._message === "user validation failed") {
+        Object.keys(error.errors)
+            .forEach(errorName => {
+                const message = error.errors[errorName].message
+                newError[errorName] = message
+            })
+    } else if(error.code === 11000) {
+        newError.email = "Email already registered."
+    } else if(error.name === "verify") {
+        error.errors.forEach(({ message, type }) => { newError[type] = message })
+    }
+    return { errorMessage: newError }
+}
 
 
 const createToken = id => {
@@ -14,20 +32,19 @@ const loginUser = async (req, res) => {
         const token = await createToken(user._id)
         res.json({ name: user.name, token })
     } catch(error) {
-        console.log(error)
-        res.sendStatus(400)
+        const formattedError = errorHandler(error)
+        res.status(401).json(formattedError)
     }
 }
 
 const registerUser = async (req, res) => {
     try {
-        console.log(req.body)
         const user = await User.create(req.body)
         const token = await createToken(user._id)
         res.json({ token })
     } catch(error) {
-        console.log(error)
-        res.sendStatus(400)
+        const formattedError = errorHandler(error)
+        res.status(400).json(formattedError)
     }
 }
 

@@ -28,3 +28,8 @@ Finally type in your terminal "npm run dev" to run the back end and client serve
 
 If you want to transpile the react code into a bundle then type in the terminal "npm run client-build".  
 Note that to render the edit and delete buttons on the app I'm checking if the user has the same email as the one in the post, so anyone can see your email attached to your post in javascript. I could have made an id that indirectly connected the user and the posts they made but the point of this app is to showcase my skills with Redux and JWT.  
+
+todo list:  
+Add error handling with displayed error messages.  
+Add markdown functionality.  
+Make id that ties posts to the user who created them that doesn't include their email or user id (we use the id to sign a token).  

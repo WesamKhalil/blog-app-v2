@@ -27,11 +27,27 @@ export const fetchPost = id => async (dispatch) => {
 }
 
 export const addPost = entries => async (dispatch) => {
-    const post = (await axios.post('/api/post/add', entries, tokenConfig())).data
-    dispatch({
-        type: NEW_POST,
-        payload: post
-    })
+    try {
+        const post = (await axios.post('/api/post/add', entries, tokenConfig())).data
+        dispatch({
+            type: NEW_POST,
+            payload: post
+        })
+    } catch(error) {
+        throw error.response.data
+    }
+}
+
+export const editPost = (entries, id) => async (dispatch) => {
+    try {
+        const post =  (await axios.put('/api/post/edit/' + id, entries, tokenConfig())).data
+        dispatch({
+            type: EDIT_POST,
+            payload: post
+        })
+    } catch(error) {
+        throw error.response.data
+    }
 }
 
 export const deletePost = id => async (dispatch, getState) => {
@@ -40,14 +56,6 @@ export const deletePost = id => async (dispatch, getState) => {
     dispatch({
         type: DELETE_POST,
         payload: items
-    })
-}
-
-export const editPost = (entries, id) => async (dispatch) => {
-    const post =  (await axios.put('/api/post/edit/' + id, entries, tokenConfig())).data
-    dispatch({
-        type: EDIT_POST,
-        payload: post
     })
 }
 

@@ -11,7 +11,8 @@ export class NewPost extends Component {
         this.state = {
             title: '',
             description: '',
-            content: ''
+            content: '',
+            errorMessage: {}
         }
     }
 
@@ -23,11 +24,10 @@ export class NewPost extends Component {
     }
 
     async componentDidMount() {
-        await this.props.fetchPost(this.props.match.params.id)
-        console.log('component', this.props.item)
-        const { title, description, content } = this.props.item
-
-        if(this.props.match.params.id) this.setState({title, description, content})
+        if(this.props.match.params.id) {
+            await this.props.fetchPost(this.props.match.params.id)
+            this.setState(this.props.item)
+        }
     }
 
     handleSubmit = async (e) => {
@@ -41,25 +41,24 @@ export class NewPost extends Component {
 
         const entries = { author, email, title, description, content }
 
-        if(this.props.match.params.id) {
-            await this.props.editPost(entries, this.props.match.params.id)
-        } else {
-            await this.props.addPost(entries)
-        }
 
-        if(this.props.match.path === '/edit/:id' || this.props.match.path === '/new') {
+        try {
+            if(this.props.match.params.id) {
+                await this.props.editPost(entries, this.props.match.params.id)
+            } else {
+                await this.props.addPost(entries)
+            }
+    
             const state = { ...this.props.item, author, email, title, description, content }
             this.props.history.push({ pathname: '/view/' + this.props.match.params.id, state })
-        } else {
-            this.props.history.push('/view/' + this.props.match.params.id)
+        } catch(error) {
+            this.setState(error)
         }
     }
 
     render() {
 
-        let { title, description, content } = this.state
-
-        if(!this.props.match.params.id) title, description, content = null
+        const { title, description, content, errorMessage } = this.state
 
         if(!this.props.loggedIn) return (
             <div className="message-login">
@@ -72,9 +71,13 @@ export class NewPost extends Component {
                 <h1 className="form-title">Create a new post.</h1>
                 <form onSubmit={this.handleSubmit}>
                     <input type="text" name="title" defaultValue={title} placeholder="Title" autoComplete="off" />
+                    { errorMessage.title == null ? null : (<div className="error-message">{errorMessage.title}</div>) }
                     <input type="text" name="description" defaultValue={description} placeholder="Description" autoComplete="off" />
+                    { errorMessage.description == null ? null : (<div className="error-message">{errorMessage.description}</div>) }
                     <textarea type="text" name="content" defaultValue={content} placeholder="Content"></textarea>
+                    { errorMessage.content == null ? null : (<div className="error-message">{errorMessage.content}</div>) }
                     <button>Submit</button>
+                    { errorMessage.general == null ? null : (<div className="error-message">{errorMessage.general}</div>) }
                 </form>
             </div>
         )

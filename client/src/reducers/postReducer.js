@@ -2,7 +2,8 @@ import { FETCH_POSTS, NEW_POST, FETCH_POST, DELETE_POST, EDIT_POST } from '../ac
 
 const initialState = {
     items: [],
-    item: {}
+    item: {},
+    errorMessages: { author: null, email: null, title: null, description: null, content: null, general: null }
 }
 
 export default (state = initialState, action) => {
