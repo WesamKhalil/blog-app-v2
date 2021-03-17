@@ -1,23 +1,18 @@
 import { FETCH_POSTS, NEW_POST, FETCH_POST, DELETE_POST, EDIT_POST } from './types'
 import axios from 'axios'
 
-export const fetchPosts = (page, limit) => async (dispatch) => {
-    const posts = (await axios.get(`/api/post/?page=${page}&limit=${limit}`)).data.posts
-    dispatch({
-        type: FETCH_POSTS,
-        payload: posts
-    })
-}
-
-export const fetchMorePosts = (page, limit) => async (dispatch, getstate) => {
+//Fetches multiple posts in a paginated like fashion, intially loading 5 posts.
+export const fetchPosts = (page, limit) => async (dispatch, getstate) => {
     const newPosts = (await axios.get(`/api/post/?page=${page}&limit=${limit}`)).data.posts
-    const oldPosts = getstate().posts.items
+    let oldPosts = []
+    if(page > 1) oldPosts = getstate().posts.items
     dispatch({
         type: FETCH_POSTS,
         payload: oldPosts.concat(newPosts)
     })
 }
 
+//Fetches a single post for viewing or editing.
 export const fetchPost = id => async (dispatch) => {
     const post = (await axios.get('/api/post/single/' + id)).data
     dispatch({
@@ -26,6 +21,7 @@ export const fetchPost = id => async (dispatch) => {
     })
 }
 
+//Action for creating a new post.
 export const addPost = entries => async (dispatch) => {
     try {
         const post = (await axios.post('/api/post/add', entries, tokenConfig())).data
@@ -38,6 +34,7 @@ export const addPost = entries => async (dispatch) => {
     }
 }
 
+//Action for updating and edited post.
 export const editPost = (entries, id) => async (dispatch) => {
     try {
         const post =  (await axios.put('/api/post/edit/' + id, entries, tokenConfig())).data
@@ -50,6 +47,7 @@ export const editPost = (entries, id) => async (dispatch) => {
     }
 }
 
+//Action for deleting a post.
 export const deletePost = id => async (dispatch, getState) => {
     await axios.delete('/api/post/delete/' + id, tokenConfig())
     const items = getState().posts.items.filter(post => post._id !== id)
@@ -59,6 +57,7 @@ export const deletePost = id => async (dispatch, getState) => {
     })
 }
 
+//function for creating headers configuration to put the users token inside for authorisation.
 const tokenConfig = () => {
     const token = localStorage.getItem('jwt')
     if(!token) return {}

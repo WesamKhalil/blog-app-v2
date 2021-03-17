@@ -29,12 +29,14 @@ export class ViewPost extends Component {
 
     }
 
+    //Load single post and put it in local state.
     async componentDidMount() {
         if(this.props.location.state) return this.setState(this.props.location.state)
         await this.props.fetchPost(this.props.match.params.id)
         this.setState(this.props.post)
     }
 
+    //Function for delete this post.
     handleDelete = async (id) => {
         await this.props.deletePost(id)
 

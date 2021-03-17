@@ -4,6 +4,7 @@ import { addPost, fetchPost, editPost } from '../actions/postActions'
 import PropTypes from 'prop-types'
 import './styles/NewPost.css'
 
+//Form for creating and editing existing posts.
 export class NewPost extends Component {
     constructor(props) {
         super(props)
@@ -23,6 +24,7 @@ export class NewPost extends Component {
         fetchPost: PropTypes.func
     }
 
+    //If this component is used for editing then we load the document/post to be edited and put it in local state.
     async componentDidMount() {
         if(this.props.match.params.id) {
             await this.props.fetchPost(this.props.match.params.id)
@@ -30,6 +32,7 @@ export class NewPost extends Component {
         }
     }
 
+    //Handles submitting a new or edited post, then redirects to the '/view' route to view said post.
     handleSubmit = async (e) => {
         e.preventDefault()
 
@@ -60,6 +63,7 @@ export class NewPost extends Component {
 
         const { title, description, content, errorMessage } = this.state
 
+        //Elements to be rendered if user is not logged in as non users can't create/edit posts.
         if(!this.props.loggedIn) return (
             <div className="message-login">
                 <h1>Login to make a post.</h1>

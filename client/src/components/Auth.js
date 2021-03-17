@@ -4,6 +4,7 @@ import { login, register } from '../actions/authActions'
 import PropTypes from 'prop-types'
 import './styles/Auth.css'
 
+//The component for rendering the login and register form.
 export class Auth extends Component {
     constructor(props) {
         super(props)
@@ -25,6 +26,7 @@ export class Auth extends Component {
         register: PropTypes.func
     }
 
+    //Handles sending data whether that is logging in or registering a user.
     handleSubmit = async (e) => {
         e.preventDefault()
 
@@ -51,6 +53,8 @@ export class Auth extends Component {
         const isRegister = pathName === "register"
         const { name, email, password, general } = this.state
 
+        //Conditionally render a name input if we're on '/register' route.
+        //Also conditionally render error messages if they exist.
         return (
             <div className="logreg-container">
                 <h1 className="form-title">{pathName}</h1>

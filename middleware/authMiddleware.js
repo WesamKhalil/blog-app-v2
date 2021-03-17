@@ -3,7 +3,7 @@ const User = require('../models/User')
 const Post = require('../models/Post')
 require("dotenv").config()
 
-//Confirm that the token sent by client belongs to an existing user
+//Confirm that the token sent by client belongs to an existing user.
 const authPost = async (req, res, next) => {
     const token = req.header("x-auth-token")
 
@@ -24,7 +24,7 @@ const authPost = async (req, res, next) => {
     }
 }
 
-//Middleware for checking if confirmed user can mutate requested document/post
+//Middleware for checking if confirmed user can mutate requested document/post.
 const authPostMutate = async (req, res, next) => {
     try {
         const post = await Post.findById(req.params.id).select('email').lean()

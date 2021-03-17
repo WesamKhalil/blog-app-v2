@@ -1,5 +1,6 @@
 const Post = require('../models/Post')
 
+//Formats errors into desired object to send as json to the client.
 const errorHandler = error => {
     let newError = { author: null, email: null, title: null, description: null, content: null, general: null }
 
@@ -17,6 +18,7 @@ const errorHandler = error => {
     }
 }
 
+//Controller/Middleware for getting multiple posts with pagination functionality, we're excluding content for faster loading.
 const getPosts = async (req, res) => {
     const page = parseInt(req.query.page) || 1
     const limit = parseInt(req.query.limit) || 5
@@ -29,6 +31,7 @@ const getPosts = async (req, res) => {
     }
 }
 
+//Controller/Middleware for getting a single post, difference between this and getPosts is that getSinglePost sends the whole document/post.
 const getSinglePost = async (req, res) => {
     try {
         const post = await Post.findById(req.params.id).lean()
@@ -39,6 +42,7 @@ const getSinglePost = async (req, res) => {
     }
 }
 
+//Controller/Middleware for creating a new post.
 const createPost = async (req, res) => {
     try {
         const newPost = await Post.create(req.body)
@@ -49,6 +53,7 @@ const createPost = async (req, res) => {
     }
 }
 
+//Controller/Middleware for editing an existing post.
 const editPost = async (req, res) => {
     try {
         const post = await Post.findByIdAndUpdate(req.params.id, req.body, { runValidators: true }).lean()
@@ -60,6 +65,7 @@ const editPost = async (req, res) => {
     }
 }
 
+//Controller/Middleware for deleting an existing post.
 const deletePost = async (req, res) => {
     try {
         await Post.findByIdAndDelete(req.params.id)

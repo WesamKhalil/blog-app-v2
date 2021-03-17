@@ -26,11 +26,13 @@ const userSchema = new mongoose.Schema({
     }
 })
 
+//Before your created password is saved on the database it is encrypted using bcrypt.
 userSchema.pre('save', async function(next) {
     this.password = await bcrypt.hash(this.password, 10)
     next()
 })
 
+//Create a user verification function on the User model to use in the userApiController.
 userSchema.statics.verify = async function(email, password) {
     let errorList = { name: "verify", errors: [] }
     if(!email) errorList.errors.push({ message: "Please provide an email.", type: "email" })
@@ -48,6 +50,7 @@ userSchema.statics.verify = async function(email, password) {
     return { name: user.name, _id: user._id }
 }
 
+//Function for validating a valid name format, alphabet characters and spaces only allowed in name.
 function isValidName(name) {
     return /^[a-zA-Z\s]+$/.test(name)
 }

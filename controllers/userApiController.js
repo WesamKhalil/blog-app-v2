@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken')
 const e = require('express')
 require("dotenv").config()
 
+//Formats errors into desired object to send as json to the client.
 const errorHandler = error => {
     let newError = { name: null, email: null, password: null, general: null }
 
@@ -20,11 +21,12 @@ const errorHandler = error => {
     return { errorMessage: newError }
 }
 
-
+//Function for creating tokens, here we can add extra parameters and it will change it for all tokens created with this function.
 const createToken = id => {
     return jwt.sign({id}, process.env.JWT_KEY)
 }
 
+//Controller/Middleware for logging in user.
 const loginUser = async (req, res) => {
     const { email, password } = req.body
     try {
@@ -37,6 +39,7 @@ const loginUser = async (req, res) => {
     }
 }
 
+//Controller/Middleware for registering a user.
 const registerUser = async (req, res) => {
     try {
         const user = await User.create(req.body)
@@ -48,6 +51,7 @@ const registerUser = async (req, res) => {
     }
 }
 
+//Controller/Middleware for loading user name and email for client with valid user token, for when they restart the app.
 const loadUser = async (req, res) => {
     const token = req.header("x-auth-token")
     try {

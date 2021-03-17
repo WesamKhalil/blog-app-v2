@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { fetchPosts, fetchMorePosts, deletePost } from '../actions/postActions'
+import { fetchPosts, deletePost } from '../actions/postActions'
 import { EditDele } from './EditDele'
 import PropTypes from 'prop-types'
 import './styles/Posts.css'
@@ -18,23 +18,25 @@ export class Posts extends Component {
 
     static propTypes = {
         fetchPosts: PropTypes.func.isRequired,
-        fetchMorePosts: PropTypes.func.isRequired,
         deletePost: PropTypes.func.isRequired,
         posts: PropTypes.array.isRequired
     }
 
+    //Fetch the first 5 initial posts.
     componentDidMount() {
         const { page, limit } = this.state
         this.props.fetchPosts(page, limit)
     }
 
+    //Function for loading more posts.
     loadMorePosts = () => {
         this.setState(prevstate => ({ page: prevstate.page + 1 }))
         const { page, limit } = this.state
-        this.props.fetchMorePosts(page + 1, limit)
+        this.props.fetchPosts(page + 1, limit)
     }
 
     render() {
+        //Load items from the posts reducer and go through the array to render each one.
         return (
             <div className="posts-container">
                 <h1 className="page-title">Posts</h1>
@@ -64,4 +66,4 @@ const mapStateToProps = state => ({
     user: state.auth.user
 })
 
-export default connect(mapStateToProps, { fetchPosts, fetchMorePosts, deletePost })(Posts)
+export default connect(mapStateToProps, { fetchPosts, deletePost })(Posts)

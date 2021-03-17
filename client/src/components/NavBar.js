@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import './styles/NavBar.css'
 
+//Component for navigation bar.
 export class NavBar extends Component {
 
     static propTypes = {
@@ -14,6 +15,7 @@ export class NavBar extends Component {
 
     authButtons = () => {
         if(this.props.loggedIn) {
+            //Elements that will be rendered if user is logged in.
             return (
                 <React.Fragment>
                     <h1 className="menu-name">Welcome, {this.props.user.name}</h1>
@@ -22,6 +24,7 @@ export class NavBar extends Component {
             )
         }
 
+        //Elements that will be rendered if user is not logged in, they'll be shown buttons to login or register.
         return (
             <React.Fragment>
                 <h1><Link to='/login' className="nav-btn">Login</Link></h1>

@@ -12,6 +12,7 @@ import './App.css'
 
 export class App extends Component {
 
+    //Loads user information if they have a valid token.
     componentDidMount() {
         if(localStorage.getItem('jwt')) store.dispatch(loadUser())
     }
