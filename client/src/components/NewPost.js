@@ -55,6 +55,7 @@ export class NewPost extends Component {
             const state = { ...this.props.item, author, title, description, content }
             this.props.history.push({ pathname: '/view/' + this.props.item._id, state })
         } catch(error) {
+            console.log(error)
             this.setState(error)
         }
     }

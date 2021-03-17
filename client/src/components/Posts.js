@@ -39,20 +39,22 @@ export class Posts extends Component {
         //Load items from the posts reducer and go through the array to render each one.
         return (
             <div className="posts-container">
-                <h1 className="page-title">Posts</h1>
-                {this.props.posts.map(({ _id, author, title, description, userPostsId }, ind) => (
-                    <div key={"posts" + ind} className="post">
-                        <div className="post-inner-box">
-                            <h2 className="post-title">Title: {title}</h2>
-                            <h3>Description: {description}</h3>
-                            <p>Written by: {author}</p>
-                            <p><Link to={"/view/" + _id}>Read more</Link></p>
+                <div className="posts-inner-container">
+                    <h1 className="posts-page-title">Posts</h1>
+                    {this.props.posts.map(({ _id, author, title, description, userPostsId }, ind) => (
+                        <div key={"posts" + ind} className="posts">
+                            <div className="posts-inner-box">
+                                <h2 className="posts-title">Title: {title}</h2>
+                                <h3 className="posts-description">Description: {description}</h3>
+                                <p className="posts-author">Written by: {author}</p>
+                                <p><Link to={"/view/" + _id}>Read more</Link></p>
+                            </div>
+                            <div className="posts-buttons">
+                                { userPostsId === this.props.user.userPostsId ? <EditDele id={_id} deletePost={() => this.props.deletePost(_id)} /> : null }
+                            </div>
                         </div>
-                        <div className="post-buttons">
-                            { userPostsId === this.props.user.userPostsId ? <EditDele id={_id} deletePost={() => this.props.deletePost(_id)} /> : null }
-                        </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
                 <div className="load-more">
                     <button onClick={this.loadMorePosts}>Load more posts</button>
                 </div>

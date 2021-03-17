@@ -10,14 +10,31 @@
 .viewpost-title {
     text-align: center;
     margin-bottom: 30px;
+    font-size: 2.5rem;
+    text-decoration: underline;
 }
 
-.view-post p {
-    margin-bottom: 10px;;
-}
-
-.view-post h3 {
+.viewpost-author,
+.viewpost-description {
     margin-bottom: 10px;
+    font-size: 1.5rem;
+}
+
+.viewpost-title,
+.viewpost-author,
+.viewpost-description {
+    word-wrap: break-word;
+}
+
+
+.viewpost-dates {
+    color: grey;
+}
+
+.viewpost-content {
+    white-space: pre-line;
+    margin-top: 4rem;
+    font-size: 1.3rem;;
 }
 
 .view-post-buttons {
@@ -25,15 +42,6 @@
     margin: 50px auto;
     display: flex;
     justify-content: space-around;
-}
-
-.display-linebreak {
-    white-space: pre-line;
-    margin-top: 4rem;
-}
-
-.viewpost-dates {
-    color: grey;
 }
 
 @media (min-width: 750px) {

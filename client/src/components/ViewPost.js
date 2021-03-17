@@ -51,13 +51,13 @@ export class ViewPost extends Component {
         return (
             <div className="view-post">
                 <h1 className="viewpost-title">{title}</h1>
-                <h3>Author: {author}</h3>
-                <h3>Description: {description}</h3>
+                <h3 className="viewpost-author">Author: {author}</h3>
+                <h3 className="viewpost-description">Description: {description}</h3>
                 <div className="viewpost-dates">
                     <p>Last updated at: { updatedAt?.slice(0, 10) + ' ' + updatedAt?.slice(11, 19) }</p>
                     <p>Created at: {createdAt?.slice(0, 10) + ' ' + createdAt?.slice(11, 19)}</p>
                 </div>
-                <div className="display-linebreak">{content}</div>
+                <div className="viewpost-content">{content}</div>
                 <div className="view-post-buttons">
                     { userPostsId === this.props.user?.userPostsId ? <EditDele id={_id} deletePost={() => this.props.deletePost(_id)} /> : null }
                 </div>

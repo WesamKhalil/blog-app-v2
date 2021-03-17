@@ -4,7 +4,7 @@ const Post = require('../models/Post')
 const errorHandler = error => {
     let newError = { author: null, email: null, title: null, description: null, content: null, general: null }
 
-    if(error._message === "post validation failed") {
+    if(error._message === "post validation failed" || error._message === "Validation failed") {
         Object.keys(error.errors)
             .forEach(errorName => {
                 const message = error.errors[errorName].message
@@ -56,7 +56,7 @@ const createPost = async (req, res) => {
 //Controller/Middleware for editing an existing post.
 const editPost = async (req, res) => {
     try {
-        const post = await Post.findByIdAndUpdate(req.params.id, req.body, { runValidators: true }).lean()
+        const post = await Post.findByIdAndUpdate(req.params.id, req.body, { runValidators: true })
         if(post === null) throw new Error("Post doesn't exist.")
         res.json(post)
     } catch(error) {

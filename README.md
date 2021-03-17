@@ -31,4 +31,7 @@ To run this application for development type in your terminal "npm run dev" to r
 Note that to render the edit and delete buttons on the app I'm checking if the user has the same email as the one in the post, so anyone can see your email attached to your post in javascript. I could have made an id that indirectly connected the user and the posts they made but the point of this app is to showcase my skills with Redux and JWT.  
 
 todo list:  
-~~Add markdown functionality.~~  
+~~Add markdown functionality.~~ No, no I don't think I will.  
+Possible features:  
+Email validaton.
+Password validation for one uppercase letter, lowercase letter, number and special character.

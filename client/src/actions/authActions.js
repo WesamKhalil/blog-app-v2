@@ -41,7 +41,6 @@ export const logout = () => dispatch => {
 //Action for loading user.
 export const loadUser = () => async (dispatch) => {
     const userDetails = (await axios.post('/api/user/load', {}, tokenConfig())).data
-    console.log('user details', userDetails)
     dispatch({
         type: LOAD_USER_SUCCESS,
         payload: userDetails
