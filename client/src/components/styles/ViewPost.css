@@ -22,7 +22,8 @@
 
 .viewpost-title,
 .viewpost-author,
-.viewpost-description {
+.viewpost-description,
+.viewpost-content {
     word-wrap: break-word;
 }
 
