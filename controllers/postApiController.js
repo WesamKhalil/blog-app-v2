@@ -24,7 +24,7 @@ const getPosts = async (req, res) => {
     const limit = parseInt(req.query.limit) || 5
     const startIndex = (page - 1) * limit
     try {
-        const posts = await Post.find().sort({ createdAt: 'desc'}).skip(startIndex).limit(limit).select('author email title description').lean()
+        const posts = await Post.find().sort({ createdAt: 'desc'}).skip(startIndex).limit(limit).select('author title description userPostsId').lean()
         res.json({ posts })
     } catch(error) {
         res.sendStatus(400)

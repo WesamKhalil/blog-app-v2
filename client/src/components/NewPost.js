@@ -37,12 +37,12 @@ export class NewPost extends Component {
         e.preventDefault()
 
         const author = this.props.user.name
-        const email = this.props.user.email
         const title = e.target.title.value
         const description = e.target.description.value
         const content = e.target.content.value
+        const userPostsId = this.props.user.userPostsId
 
-        const entries = { author, email, title, description, content }
+        const entries = { author, title, description, content, userPostsId }
 
 
         try {
@@ -52,8 +52,8 @@ export class NewPost extends Component {
                 await this.props.addPost(entries)
             }
     
-            const state = { ...this.props.item, author, email, title, description, content }
-            this.props.history.push({ pathname: '/view/' + this.props.match.params.id, state })
+            const state = { ...this.props.item, author, title, description, content }
+            this.props.history.push({ pathname: '/view/' + this.props.item._id, state })
         } catch(error) {
             this.setState(error)
         }
@@ -75,12 +75,15 @@ export class NewPost extends Component {
                 <h1 className="form-title">Create a new post.</h1>
                 <form onSubmit={this.handleSubmit}>
                     <input type="text" name="title" defaultValue={title} placeholder="Title" autoComplete="off" />
-                    { errorMessage.title == null ? null : (<div className="error-message">{errorMessage.title}</div>) }
+
                     <input type="text" name="description" defaultValue={description} placeholder="Description" autoComplete="off" />
-                    { errorMessage.description == null ? null : (<div className="error-message">{errorMessage.description}</div>) }
+
                     <textarea type="text" name="content" defaultValue={content} placeholder="Content"></textarea>
-                    { errorMessage.content == null ? null : (<div className="error-message">{errorMessage.content}</div>) }
+                    
                     <button>Submit</button>
+                    { errorMessage.title == null ? null : (<div className="error-message">{errorMessage.title}</div>) }
+                    { errorMessage.description == null ? null : (<div className="error-message">{errorMessage.description}</div>) }
+                    { errorMessage.content == null ? null : (<div className="error-message">{errorMessage.content}</div>) }
                     { errorMessage.general == null ? null : (<div className="error-message">{errorMessage.general}</div>) }
                 </form>
             </div>

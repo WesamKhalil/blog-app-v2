@@ -4,11 +4,11 @@ import axios from 'axios'
 //Action for logging in.
 export const login = (email, password) => async (dispatch) => {
     try {
-        const { name, token } = (await axios.post('/api/user/login', { email, password })).data
+        const { name, token, userPostsId } = (await axios.post('/api/user/login', { email, password })).data
         localStorage.setItem('jwt', token)
         dispatch({
             type: LOGIN_SUCCESS,
-            payload: { name, email }
+            payload: { name, email, userPostsId }
         })
     } catch(error) {
         throw error.response.data
@@ -18,12 +18,12 @@ export const login = (email, password) => async (dispatch) => {
 //Action for registering.
 export const register = (name, email, password) => async (dispatch) => {
     try {
-        const { token } = (await axios.post('/api/user/register', { name, email, password })).data
+        const { token, userPostsId } = (await axios.post('/api/user/register', { name, email, password })).data
         localStorage.removeItem('jwt')
         localStorage.setItem('jwt', token)
         dispatch({
             type: REGISTER_SUCCESS,
-            payload: { name, email }
+            payload: { name, email, userPostsId }
         })
     } catch(error) {
         throw error.response.data
@@ -40,10 +40,11 @@ export const logout = () => dispatch => {
 
 //Action for loading user.
 export const loadUser = () => async (dispatch) => {
-    const { name, email } = (await axios.post('/api/user/load', {}, tokenConfig())).data
+    const userDetails = (await axios.post('/api/user/load', {}, tokenConfig())).data
+    console.log('user details', userDetails)
     dispatch({
         type: LOAD_USER_SUCCESS,
-        payload: { name, email }
+        payload: userDetails
     })
 }
 

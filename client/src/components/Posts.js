@@ -40,7 +40,7 @@ export class Posts extends Component {
         return (
             <div className="posts-container">
                 <h1 className="page-title">Posts</h1>
-                {this.props.posts.map(({ author, email, title, description, _id }, ind) => (
+                {this.props.posts.map(({ _id, author, title, description, userPostsId }, ind) => (
                     <div key={"posts" + ind} className="post">
                         <div className="post-inner-box">
                             <h2 className="post-title">Title: {title}</h2>
@@ -49,7 +49,7 @@ export class Posts extends Component {
                             <p><Link to={"/view/" + _id}>Read more</Link></p>
                         </div>
                         <div className="post-buttons">
-                            { email === this.props.user.email ? <EditDele id={_id} deletePost={() => this.props.deletePost(_id)} /> : null }
+                            { userPostsId === this.props.user.userPostsId ? <EditDele id={_id} deletePost={() => this.props.deletePost(_id)} /> : null }
                         </div>
                     </div>
                 ))}

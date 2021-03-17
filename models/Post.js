@@ -5,10 +5,6 @@ const postSchema = new mongoose.Schema({
         type: String,
         required: [true, "Please login or register to make a post."]
     },
-    email: {
-        type: String,
-        required: [true, "Please login or register to make a post."]
-    },
     title: {
         type: String,
         required: [true, "Please provide a title."],
@@ -22,7 +18,10 @@ const postSchema = new mongoose.Schema({
     content: {
         type: String,
         required: [true, "Please provide content for the post."],
-        maxLength: [600, "Content can't be more than 600 characters."]
+        maxLength: [2000, "Content can't be more than 2000 characters."]
+    },
+    userPostsId: {
+        type: String
     }
 }, { timestamps: true })
 

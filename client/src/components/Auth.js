@@ -60,12 +60,15 @@ export class Auth extends Component {
                 <h1 className="form-title">{pathName}</h1>
                 <form onSubmit={this.handleSubmit}>
                     { isRegister ? <input type="text" name="name" placeholder="Username" autoComplete="off" /> : null }
-                    { name == null ? null : (<div className="error-message">{name}</div>) }
+
                     <input type="email" name="email" placeholder="Email" autoComplete="off" />
-                    { email == null ? null : (<div className="error-message">{email}</div>) }
+
                     <input type="password" name="password" placeholder="Password" autoComplete="off"/>
+                    
+                    <button>{pathName}</button>
+                    { name == null ? null : (<div className="error-message">{name}</div>) }
+                    { email == null ? null : (<div className="error-message">{email}</div>) }
                     { password == null ? null : (<div className="error-message">{password}</div>) }
-                    <button>Submit</button>
                     { general == null ? null : (<div className="error-message">{general}</div>) }
                 </form>
             </div>

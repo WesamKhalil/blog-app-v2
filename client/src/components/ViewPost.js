@@ -45,18 +45,21 @@ export class ViewPost extends Component {
 
     render() {
 
-        const { title, author, email, description, content, createdAt, updatedAt, _id } = this.state
+        const {  _id, title, author, description, content, createdAt, updatedAt, userPostsId } = this.state
+        console.log('view post userpostsid', userPostsId)
 
         return (
             <div className="view-post">
                 <h1 className="viewpost-title">{title}</h1>
-                <p>Author: {author}</p>
-                <p>Last updated at: {updatedAt?.slice(0, 10)}</p>
-                <p>Created at: {createdAt?.slice(0, 10)}</p>
+                <h3>Author: {author}</h3>
                 <h3>Description: {description}</h3>
-                <p>{content}</p>
+                <div className="viewpost-dates">
+                    <p>Last updated at: { updatedAt?.slice(0, 10) + ' ' + updatedAt?.slice(11, 19) }</p>
+                    <p>Created at: {createdAt?.slice(0, 10) + ' ' + createdAt?.slice(11, 19)}</p>
+                </div>
+                <div className="display-linebreak">{content}</div>
                 <div className="view-post-buttons">
-                    { email === this.props.user?.email ? <EditDele id={_id} deletePost={() => this.props.deletePost(_id)} /> : null }
+                    { userPostsId === this.props.user?.userPostsId ? <EditDele id={_id} deletePost={() => this.props.deletePost(_id)} /> : null }
                 </div>
             </div>
         )

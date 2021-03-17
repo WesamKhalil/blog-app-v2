@@ -17,7 +17,7 @@
 }
 
 .view-post h3 {
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 
 .view-post-buttons {
@@ -25,6 +25,15 @@
     margin: 50px auto;
     display: flex;
     justify-content: space-around;
+}
+
+.display-linebreak {
+    white-space: pre-line;
+    margin-top: 4rem;
+}
+
+.viewpost-dates {
+    color: grey;
 }
 
 @media (min-width: 750px) {

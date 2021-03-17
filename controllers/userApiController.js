@@ -30,9 +30,9 @@ const createToken = id => {
 const loginUser = async (req, res) => {
     const { email, password } = req.body
     try {
-        const user = await User.verify(email, password)
-        const token = await createToken(user._id)
-        res.json({ name: user.name, token })
+        const { name, _id, userPostsId } = await User.verify(email, password)
+        const token = await createToken(_id)
+        res.json({ name, userPostsId, token })
     } catch(error) {
         const formattedError = errorHandler(error)
         res.status(401).json(formattedError)
@@ -42,9 +42,9 @@ const loginUser = async (req, res) => {
 //Controller/Middleware for registering a user.
 const registerUser = async (req, res) => {
     try {
-        const user = await User.create(req.body)
-        const token = await createToken(user._id)
-        res.json({ token })
+        const { _id, userPostsId } = await User.create(req.body)
+        const token = await createToken(_id)
+        res.json({ token, userPostsId })
     } catch(error) {
         const formattedError = errorHandler(error)
         res.status(400).json(formattedError)
@@ -56,8 +56,8 @@ const loadUser = async (req, res) => {
     const token = req.header("x-auth-token")
     try {
         const decodedToken = await jwt.verify(token, process.env.JWT_KEY)
-        const { name, email } = await User.findById(decodedToken.id).select('name email').lean()
-        res.json({ name, email })
+        const { name, email, userPostsId } = await User.findById(decodedToken.id).select('name email userPostsId').lean()
+        res.json({ name, email, userPostsId })
     } catch(error) {
         res.sendStatus(401)
     }

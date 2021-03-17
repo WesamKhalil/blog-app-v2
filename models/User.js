@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
+const { v4: uuidv4 }  = require('uuid')
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -23,12 +24,18 @@ const userSchema = new mongoose.Schema({
         // validate: [
         //     { validator: isValidPassword, message: "Password requires one uppercase letter, lowercase letter, number and special character." }
         // ]
+    },
+    userPostsId: {
+        type: String
     }
 })
 
 //Before your created password is saved on the database it is encrypted using bcrypt.
+//We also create a second id that ties a user to their posts to avoid using the user _id as we use it to create a token.
+//And we don't want to expose users emails on the app so that's not an option.
 userSchema.pre('save', async function(next) {
     this.password = await bcrypt.hash(this.password, 10)
+    this.userPostsId = await uuidv4()
     next()
 })
 
@@ -39,7 +46,7 @@ userSchema.statics.verify = async function(email, password) {
     if(!password) errorList.errors.push({ message: "Please provide a password.", type: "password" })
     if(errorList.errors.length > 0) throw errorList
 
-    const user = await this.findOne({ email }).select('name password').lean()
+    const user = await this.findOne({ email }).select('name password userPostsId').lean()
     
     if(!user) throw { name: "verify", errors: [{ message: "User with that email doesn't exist.", type: "email" }] }
 
@@ -47,7 +54,7 @@ userSchema.statics.verify = async function(email, password) {
     const correctPassword = await bcrypt.compare(password, user.password)
     if(!correctPassword) throw { name: "verify", errors: [{ message: "Wrong email or password.", type: "general" }] }
 
-    return { name: user.name, _id: user._id }
+    return { name: user.name, _id: user._id, userPostsId: user.userPostsId }
 }
 
 //Function for validating a valid name format, alphabet characters and spaces only allowed in name.
