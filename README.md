@@ -13,7 +13,7 @@ Go into a terminal and CD into this folder.
 Type into the terminal "npm install" to install all the front end packages.  
 Type in your terminal "npm run client-install" to install all your clients development packages.  
 Create a ".env" file in the root folder, here you will provide all the environment variables.  
-Then provide a number for the PORT value for your servers port, then a anumber for your CLIENTPORT for your front end development servers port.  
+Then provide a number for the PORT value for your servers port, then a a number for your CLIENTPORT for your front end development servers port.  
 Then provide a string for your MONGOURL that directs to a Mongo database, you can create one and connect to it online with MongoDB Atlas.  
 Finally provide a signing key string to your JWT_KEY which will be used to sign tokens.  
 Don't use any spaces, here is an example.  
@@ -26,12 +26,10 @@ If you want to transpile the react code into a bundle to update the application 
  
 To run the production build type in the terminal "npm run start" and navigate to "http://localhost:" + the PORT value you put in the ".env" file.  
   
-To run this application for development type in your terminal "npm run dev" to run the back end and client server simultaneously, a window/tab should open up automatically in your browser to show you the app.  
-
-Note that to render the edit and delete buttons on the app I'm checking if the user has the same email as the one in the post, so anyone can see your email attached to your post in javascript. I could have made an id that indirectly connected the user and the posts they made but the point of this app is to showcase my skills with Redux and JWT.  
+To run this application for development type in your terminal "npm run dev" to run the back end and client server simultaneously, a window/tab should open up automatically in your browser to show you the app.   
 
 todo list:  
 ~~Add markdown functionality.~~ No, no I don't think I will.  
 Possible features:  
-Email validaton.
+Email validaton.  
 Password validation for one uppercase letter, lowercase letter, number and special character.
